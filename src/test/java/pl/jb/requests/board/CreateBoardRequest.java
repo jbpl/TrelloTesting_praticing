@@ -10,6 +10,18 @@ import static io.restassured.RestAssured.given;
 
 public class CreateBoardRequest {
 
+    public static Response createBoardRequest(String boardName) {
+
+        return given()
+                .spec(BaseRequest.requestSpecWithLogs())
+                .queryParam("name", boardName)
+                .when()
+                .post(TrelloUrl.getBoardsUrl())
+                .then()
+                .log().ifError()
+                .extract()
+                .response();
+    }
     public static Response createBoardRequest(Map<String, String> queryParams) {
 
         return given()

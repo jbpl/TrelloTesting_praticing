@@ -19,4 +19,16 @@ public class TrelloUrl {
     public static String getBoardUrl(String boardId) {
         return getBoardsUrl() + "/" + boardId;
     }
+
+    public static String getListsUrl() {
+        return LISTS;
+    }
+
+    public static String getCardsUrl() {
+        return CARDS;
+    }
+
+    public static String getCardUrl(String cardId) {
+        return getCardsUrl() + "/" + cardId;
+    }
 }

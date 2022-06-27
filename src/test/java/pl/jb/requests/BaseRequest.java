@@ -5,6 +5,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import pl.jb.properties.TrelloProperties;
 import pl.jb.url.TrelloUrl;
 
 public class BaseRequest {
@@ -14,8 +15,8 @@ public class BaseRequest {
         requestBuilder = new RequestSpecBuilder();
         requestBuilder.setBaseUri(TrelloUrl.getBaseUrl());
         requestBuilder.setContentType(ContentType.JSON);
-        requestBuilder.addQueryParam("key", KEY);
-        requestBuilder.addQueryParam("token", TOKEN);
+        requestBuilder.addQueryParam("key", TrelloProperties.getKey());
+        requestBuilder.addQueryParam("token", TrelloProperties.getToken());
         requestBuilder.addFilter(new RequestLoggingFilter());
         requestBuilder.addFilter(new ResponseLoggingFilter());
 

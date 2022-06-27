@@ -1,4 +1,4 @@
-package pl.jb.tests;
+package pl.jb.tests.board;
 
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
