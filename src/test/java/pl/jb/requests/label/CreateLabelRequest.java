@@ -1,22 +1,26 @@
-package pl.jb.requests.card;
+package pl.jb.requests.label;
 
 import io.restassured.response.Response;
 import pl.jb.requests.BaseRequest;
 import pl.jb.url.TrelloUrl;
 
+import java.util.Map;
+
 import static io.restassured.RestAssured.given;
 
-public class UpdateCardRequest {
-    public static Response updateCardRequest(String cardId, String listId) {
+public class CreateLabelRequest {
+
+    public static Response createLabelRequest(Map<String, String> queryParams) {
 
         return given()
                 .spec(BaseRequest.requestSpecWithLogs())
-                .queryParam("idList", listId)
+                .queryParams(queryParams)
                 .when()
-                .put(TrelloUrl.getCardUrl(cardId))
+                .post(TrelloUrl.getLabelsUrl())
                 .then()
                 .log().ifError()
                 .extract()
                 .response();
     }
+
 }

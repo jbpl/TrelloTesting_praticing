@@ -6,14 +6,15 @@ import pl.jb.url.TrelloUrl;
 
 import static io.restassured.RestAssured.given;
 
-public class UpdateCardRequest {
-    public static Response updateCardRequest(String cardId, String listId) {
+public class AddExistingItemToCardRequest {
+
+    public static Response addItemToCardRequest(String cardId, String itemId, String itemName) {
 
         return given()
                 .spec(BaseRequest.requestSpecWithLogs())
-                .queryParam("idList", listId)
+                .queryParam("value", itemId)
                 .when()
-                .put(TrelloUrl.getCardUrl(cardId))
+                .post(TrelloUrl.getAddExistingItemToCardUrl(cardId, itemName))
                 .then()
                 .log().ifError()
                 .extract()

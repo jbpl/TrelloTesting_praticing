@@ -6,6 +6,7 @@ public class TrelloUrl {
     private static final String BOARDS = "/boards";
     private static final String LISTS = "/lists";
     private static final String CARDS = "/cards";
+    private static final String LABELS = "/labels";
 
 
     public static String getBaseUrl() {
@@ -31,4 +32,14 @@ public class TrelloUrl {
     public static String getCardUrl(String cardId) {
         return getCardsUrl() + "/" + cardId;
     }
+
+    public static String getAddExistingItemToCardUrl(String cardId, String itemName) {
+        return getCardUrl(cardId) + "/" + itemName;
+    }
+
+    public static String getLabelsUrl() {
+        return LABELS;
+    }
+
+
 }
