@@ -10,23 +10,19 @@ import pl.jb.requests.board.CreateBoardRequest;
 import pl.jb.requests.board.DeleteBoardRequest;
 import pl.jb.requests.card.AddExistingItemToCardRequest;
 import pl.jb.requests.card.CreateCardRequest;
-import pl.jb.requests.label.CreateLabelRequest;
 import pl.jb.requests.list.CreateListRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class CreateLabelAndAddToCardE2ETest {
+class AddExistingStickerToCardE2ETest {
 
     private static final String boardName = "Board created with Java";
     private static final String listName = "List name created with Java";
     private static final String cardName = "Card name created with Java";
-    private static final String labelName = "Label created with Java";
-    private static final String labelColor = "pink";
     private static String boardId;
     private static String listId;
-    private static String labelId;
     private static String cardId;
 
     @Test
@@ -79,39 +75,28 @@ class CreateLabelAndAddToCardE2ETest {
 
     @Test
     @Order(4)
-    void createLabelOnABoardTest() {
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", labelName);
-        queryParams.put("color", labelColor);
-        queryParams.put("idBoard", boardId);
+    void AddExistingStickerToCard() {
 
-        final var response = CreateLabelRequest.createLabelRequest(queryParams);
+        String itemName = "stickers";
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("image", "taco-cool");
+        queryParams.put("top", "0");
+        queryParams.put("left", "0");
+        queryParams.put("zIndex", "1");
+
+        final var response = AddExistingItemToCardRequest.addItemToCardRequest(cardId, itemName, queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(labelName);
-        Assertions.assertThat(jsonData.getString("color")).isEqualTo(labelColor);
-        Assertions.assertThat(jsonData.getString("idBoard")).isEqualTo(boardId);
-
-        labelId = jsonData.getString("id");
+        Assertions.assertThat(jsonData.getString("image")).isEqualTo("taco-cool");
+        Assertions.assertThat(jsonData.getString("top")).isEqualTo("0");
+        Assertions.assertThat(jsonData.getString("left")).isEqualTo("0");
+        Assertions.assertThat(jsonData.getString("zIndex")).isEqualTo("1");
     }
 
     @Test
     @Order(5)
-    void addLabelToCardTest() {
-
-        String itemName = "idLabels";
-
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("value", labelId);
-
-        final var response = AddExistingItemToCardRequest.addItemToCardRequest(cardId, itemName, queryParams);
-        Assertions.assertThat(response.statusCode()).isEqualTo(200);
-        Assertions.assertThat(response.asString()).contains(labelId);
-    }
-
-    @Test
-    @Order(6)
     void deleteBoardTest() {
         final var response = DeleteBoardRequest.deleteBoardRequest(boardId);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
