@@ -7,6 +7,8 @@ public class TrelloUrl {
     private static final String LISTS = "/lists";
     private static final String CARDS = "/cards";
     private static final String LABELS = "/labels";
+    private static final String CHECKLISTS = "/checklists";
+    private static final String CHECKITEMS = "/checkitems";
 
 
     public static String getBaseUrl() {
@@ -41,5 +43,15 @@ public class TrelloUrl {
         return LABELS;
     }
 
+    public static String getChecklistsUrl() {
+        return CHECKLISTS;
+    }
 
+    public static String getChecklistUrl(String checklistId) {
+        return getChecklistsUrl() + "/" + checklistId;
+    }
+
+    public static String getCheckitemsUrl(String checklistId) {
+        return getChecklistUrl(checklistId) + CHECKITEMS;
+    }
 }
