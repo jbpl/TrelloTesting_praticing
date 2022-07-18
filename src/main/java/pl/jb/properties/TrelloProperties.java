@@ -1,7 +1,11 @@
 package pl.jb.properties;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ResourceBundle;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TrelloProperties {
 
     private static final String TOKEN = "trello.token";

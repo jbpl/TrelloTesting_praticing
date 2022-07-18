@@ -1,5 +1,6 @@
 package pl.jb.requests;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -19,6 +20,7 @@ public class BaseRequest {
         requestBuilder.addQueryParam("token", TrelloProperties.getToken());
         requestBuilder.addFilter(new RequestLoggingFilter());
         requestBuilder.addFilter(new ResponseLoggingFilter());
+        requestBuilder.addFilter(new AllureRestAssured());
 
         return requestBuilder.build();
     }
