@@ -1,5 +1,9 @@
 package pl.jb.url;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TrelloUrl {
 
     private static final String BASE_URL = "https://api.trello.com/1";
