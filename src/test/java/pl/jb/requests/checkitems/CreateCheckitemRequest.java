@@ -9,7 +9,6 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class CreateCheckitemRequest {
-
     public static Response createCheckitemRequest(String checklistId, Map<String, String> queryParams) {
 
         return given()

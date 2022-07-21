@@ -17,10 +17,10 @@ import java.util.Map;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MoveCardBetweenListsE2ETest {
-    private static final String boardName = "Board created with Java";
-    private static final String firstListName = "First list name created with Java";
-    private static final String secondListName = "Second list name created with Java";
-    private static final String cardName = "Card name created with Java";
+    private static final String BOARD_NAME = "Board created with Java";
+    private static final String FIRST_LIST_NAME = "First list name created with Java";
+    private static final String SECOND_LIST_NAME = "Second list name created with Java";
+    private static final String CARD_NAME = "Card name created with Java";
     private static String boardId;
     private static String firstListId;
     private static String secondListId;
@@ -31,11 +31,11 @@ class MoveCardBetweenListsE2ETest {
     @Order(1)
     void createBoardTest() {
 
-        final var response = CreateBoardRequest.createBoardRequest(boardName);
+        final var response = CreateBoardRequest.createBoardRequest(BOARD_NAME);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(boardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(BOARD_NAME);
 
         boardId = jsonData.getString("id");
     }
@@ -45,14 +45,14 @@ class MoveCardBetweenListsE2ETest {
     void createFirstListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", firstListName);
+        queryParams.put("name", FIRST_LIST_NAME);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateListRequest.createListRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(firstListName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(FIRST_LIST_NAME);
 
         firstListId = jsonData.getString("id");
     }
@@ -62,14 +62,14 @@ class MoveCardBetweenListsE2ETest {
     void createSecondListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", secondListName);
+        queryParams.put("name", SECOND_LIST_NAME);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateListRequest.createListRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(secondListName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(SECOND_LIST_NAME);
 
         secondListId = jsonData.getString("id");
     }
@@ -79,14 +79,14 @@ class MoveCardBetweenListsE2ETest {
     void createCardOnTheFirstListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", cardName);
+        queryParams.put("name", CARD_NAME);
         queryParams.put("idList", firstListId);
 
         final var response = CreateCardRequest.createCardRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(cardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CARD_NAME);
         Assertions.assertThat(jsonData.getString("idList")).isEqualTo(firstListId);
 
         cardId = jsonData.getString("id");

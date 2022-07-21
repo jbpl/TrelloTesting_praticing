@@ -19,11 +19,11 @@ import java.util.Map;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CreateLabelAndAddToCardE2ETest {
 
-    private static final String boardName = "Board created with Java";
-    private static final String listName = "List name created with Java";
-    private static final String cardName = "Card name created with Java";
-    private static final String labelName = "Label created with Java";
-    private static final String labelColor = "pink";
+    private static final String BOARD_NAME = "Board created with Java";
+    private static final String LIST_NAME = "List name created with Java";
+    private static final String CARD_NAME = "Card name created with Java";
+    private static final String LABEL_NAME = "Label created with Java";
+    private static final String LABEL_COLOR = "pink";
     private static String boardId;
     private static String listId;
     private static String labelId;
@@ -33,11 +33,11 @@ class CreateLabelAndAddToCardE2ETest {
     @Order(1)
     void createBoardTest() {
 
-        final var response = CreateBoardRequest.createBoardRequest(boardName);
+        final var response = CreateBoardRequest.createBoardRequest(BOARD_NAME);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(boardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(BOARD_NAME);
 
         boardId = jsonData.getString("id");
     }
@@ -47,14 +47,14 @@ class CreateLabelAndAddToCardE2ETest {
     void createListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", listName);
+        queryParams.put("name", LIST_NAME);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateListRequest.createListRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(listName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(LIST_NAME);
 
         listId = jsonData.getString("id");
     }
@@ -64,14 +64,14 @@ class CreateLabelAndAddToCardE2ETest {
     void createCardTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", cardName);
+        queryParams.put("name", CARD_NAME);
         queryParams.put("idList", listId);
 
         final var response = CreateCardRequest.createCardRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(cardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CARD_NAME);
         Assertions.assertThat(jsonData.getString("idList")).isEqualTo(listId);
 
         cardId = jsonData.getString("id");
@@ -81,16 +81,16 @@ class CreateLabelAndAddToCardE2ETest {
     @Order(4)
     void createLabelOnABoardTest() {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", labelName);
-        queryParams.put("color", labelColor);
+        queryParams.put("name", LABEL_NAME);
+        queryParams.put("color", LABEL_COLOR);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateLabelRequest.createLabelRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(labelName);
-        Assertions.assertThat(jsonData.getString("color")).isEqualTo(labelColor);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(LABEL_NAME);
+        Assertions.assertThat(jsonData.getString("color")).isEqualTo(LABEL_COLOR);
         Assertions.assertThat(jsonData.getString("idBoard")).isEqualTo(boardId);
 
         labelId = jsonData.getString("id");

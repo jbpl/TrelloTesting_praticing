@@ -18,9 +18,9 @@ import java.util.Map;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AddExistingStickerToCardE2ETest {
 
-    private static final String boardName = "Board created with Java";
-    private static final String listName = "List name created with Java";
-    private static final String cardName = "Card name created with Java";
+    private static final String BOARD_NAME = "Board created with Java";
+    private static final String LIST_NAME = "List name created with Java";
+    private static final String CARD_NAME = "Card name created with Java";
     private static String boardId;
     private static String listId;
     private static String cardId;
@@ -29,11 +29,11 @@ class AddExistingStickerToCardE2ETest {
     @Order(1)
     void createBoardTest() {
 
-        final var response = CreateBoardRequest.createBoardRequest(boardName);
+        final var response = CreateBoardRequest.createBoardRequest(BOARD_NAME);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(boardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(BOARD_NAME);
 
         boardId = jsonData.getString("id");
     }
@@ -43,14 +43,14 @@ class AddExistingStickerToCardE2ETest {
     void createListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", listName);
+        queryParams.put("name", LIST_NAME);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateListRequest.createListRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(listName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(LIST_NAME);
 
         listId = jsonData.getString("id");
     }
@@ -60,14 +60,14 @@ class AddExistingStickerToCardE2ETest {
     void createCardTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", cardName);
+        queryParams.put("name", CARD_NAME);
         queryParams.put("idList", listId);
 
         final var response = CreateCardRequest.createCardRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(cardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CARD_NAME);
         Assertions.assertThat(jsonData.getString("idList")).isEqualTo(listId);
 
         cardId = jsonData.getString("id");

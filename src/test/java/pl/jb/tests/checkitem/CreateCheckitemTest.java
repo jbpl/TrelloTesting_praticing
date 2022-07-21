@@ -19,11 +19,11 @@ import java.util.Map;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CreateCheckitemTest {
 
-    private static final String boardName = "Board created with Java";
-    private static final String listName = "List name created with Java";
-    private static final String cardName = "Card name created with Java";
-    private static final String checklistName = "Checklist name created with Java";
-    private static final String checkitemName = "Check item name created with Java";
+    private static final String BOARD_NAME = "Board created with Java";
+    private static final String LIST_NAME = "List name created with Java";
+    private static final String CARD_NAME = "Card name created with Java";
+    private static final String CHECKLIST_NAME = "Checklist name created with Java";
+    private static final String CHECKITEM_NAME = "Check item name created with Java";
     private static String boardId;
     private static String listId;
     private static String cardId;
@@ -33,11 +33,11 @@ class CreateCheckitemTest {
     @Order(1)
     void createBoardTest() {
 
-        final var response = CreateBoardRequest.createBoardRequest(boardName);
+        final var response = CreateBoardRequest.createBoardRequest(BOARD_NAME);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(boardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(BOARD_NAME);
 
         boardId = jsonData.getString("id");
     }
@@ -47,14 +47,14 @@ class CreateCheckitemTest {
     void createListTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", listName);
+        queryParams.put("name", LIST_NAME);
         queryParams.put("idBoard", boardId);
 
         final var response = CreateListRequest.createListRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(listName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(LIST_NAME);
 
         listId = jsonData.getString("id");
     }
@@ -64,14 +64,14 @@ class CreateCheckitemTest {
     void createCardTest() {
 
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", cardName);
+        queryParams.put("name", CARD_NAME);
         queryParams.put("idList", listId);
 
         final var response = CreateCardRequest.createCardRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(cardName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CARD_NAME);
         Assertions.assertThat(jsonData.getString("idList")).isEqualTo(listId);
 
         cardId = jsonData.getString("id");
@@ -83,14 +83,14 @@ class CreateCheckitemTest {
 
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("idCard", cardId);
-        queryParams.put("name", checklistName);
+        queryParams.put("name", CHECKLIST_NAME);
         queryParams.put("pos", "top");
 
         final var response = CreateChecklistRequest.createChecklistRequest(queryParams);
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(checklistName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CHECKLIST_NAME);
         Assertions.assertThat(jsonData.getString("idBoard")).isEqualTo(boardId);
         Assertions.assertThat(jsonData.getString("idCard")).isEqualTo(cardId);
 
@@ -101,7 +101,7 @@ class CreateCheckitemTest {
     @Order(5)
     void createCheckitemTest() {
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("name", checkitemName);
+        queryParams.put("name", CHECKITEM_NAME);
         queryParams.put("pos", "top");
         queryParams.put("checked", "false");
 
@@ -109,7 +109,7 @@ class CreateCheckitemTest {
         Assertions.assertThat(response.statusCode()).isEqualTo(200);
 
         JsonPath jsonData = response.jsonPath();
-        Assertions.assertThat(jsonData.getString("name")).isEqualTo(checkitemName);
+        Assertions.assertThat(jsonData.getString("name")).isEqualTo(CHECKITEM_NAME);
         Assertions.assertThat(jsonData.getString("idChecklist")).isEqualTo(checklistId);
         Assertions.assertThat(jsonData.getString("state")).isEqualTo("incomplete");
     }
